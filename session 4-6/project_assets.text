@@ -1,0 +1,8 @@
+Name: MediGen – AI Symptom Checker & Appointment Planner
+Tagline: "Your smart health companion"
+Core Features:
+1. Interprets user symptoms using GenAI and verified medical data.
+2. Suggests possible conditions with clear, educational explanations.
+3. Finds nearby hospitals and doctors automatically.
+4. Lets users book appointments instantly through hospital APIs.
+5. Generates a health report or summary via email.
