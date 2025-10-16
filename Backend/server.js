@@ -1,66 +1,76 @@
-import 'dotenv/config'
-import express from 'express'
-import mongoose from 'mongoose'
-import cors from 'cors'
-import axios from 'axios'
+import express from "express";
+import mongoose from "mongoose";
+import { exec } from "child_process";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import fetch from "node-fetch";
+import User from "./models/User.js";
+import Session from "./models/Session.js";
 
-const PORT = process.env.PORT || 3000
-const app = express()
+dotenv.config();
 
-app.use(cors())
-app.use(express.json())
+const { Types } = mongoose;
+const USE_MOCK_AICHAT = process.env.MOCK_AICHAT === "true";
+const app = express();
+app.use(bodyParser.json());
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log('✅ MongoDB connection successful'))
-  .catch(err => console.error('❌ MongoDB connection failed:', err.message))
+const PORT = process.env.PORT || 8080;
 
-// Test route
-app.get('/', (req, res) => res.send('Backend is running'))
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB connected to: ", mongoose.connection.name))
+    .catch(err=> console.error("MongoDB connection error:", err));
 
-// Analyze route
-app.post('/api/analyze', async (req, res) => {
-  try {
-    const { history } = req.body
-    if (!history || !Array.isArray(history)) {
-      return res.status(400).json({ error: 'Invalid request format' })
+app.get("/", (req, res) => {
+    res.send("Medigen backend is running!");
+});
+
+app.post("/api/analyze", async (req, res) => {
+    try {
+        const { userId, symptomsText } = req.body;
+        if (!userId || !symptomsText) return res.status(400).json({ ok: false, error: "Missing userId or symptomsText" });
+
+        console.log("Type of userId:", typeof userId, "Value:", userId, "Length:", userId.length);
+
+        
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ ok: false, error: "User not found" });
+
+        const response = await fetch('http://127.0.0.1:8000/v1/chat/completions', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                model: "gemini:gemini-2.0-flash",
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are MediGen, a medical AI assistant."
+                    },
+                    {
+                        role: "user",
+                        content: symptomsText
+                    }
+                ]
+            })
+        });
+
+        const data = await response.json();
+        console.log("Raw AIChat response:", data);
+
+        const ai_response = data.choices?.[0]?.message?.content || "No response from AIChat.";
+
+        const session = await Session.create({
+            user_id: user._id,
+            symptoms: symptomsText,
+            ai_response
+        });
+
+        res.json({ ok: true, ai_response, session_id: session._id });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ ok: false, error: err.message });
     }
+});
 
-    const lastUserMessage = history[history.length - 1]?.content || ''
-    const context = history.map(m => `${m.role}: ${m.content}`).join('\n')
-
-    const prompt = `
-You are a medical assistant. Be friendly, concise, and helpful.
-Only suggest seeing a doctor if symptoms are serious.
-
-Conversation:
-${context}
-User's latest message: "${lastUserMessage}"
-    `
-
-    // Call Google Generative Language API
-    const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-      {
-        prompt: { text: prompt },
-        temperature: 0.7,
-        maxOutputTokens: 200
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${process.env.GOOGLE_API_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-
-    const reply = response.data?.candidates?.[0]?.content?.[0]?.text || 'No response generated'
-    res.json({ reply })
-
-  } catch (err) {
-    console.error('❌ Error in /api/analyze:', err.response?.data || err.message)
-    res.status(500).json({ error: err.response?.data || err.message })
-  }
-})
-
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
