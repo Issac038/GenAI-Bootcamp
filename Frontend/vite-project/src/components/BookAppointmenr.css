@@ -1,0 +1,67 @@
+.appointments-container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 30px;
+  font-family: "Inter", sans-serif;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #0077b6;
+  margin-bottom: 24px;
+}
+
+.hospital-card {
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.hospital-card p {
+  margin: 4px 0;
+}
+
+.slots {
+  margin: 10px 0;
+}
+
+.slots button {
+  margin-right: 6px;
+  margin-bottom: 6px;
+  padding: 6px 10px;
+  border: 1px solid #0077b6;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.slots button.slot-selected {
+  background-color: #0077b6;
+  color: white;
+  border-color: #005f8a;
+}
+
+.book-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0077b6;
+  color: white;
+  cursor: pointer;
+}
+
+.book-btn:hover {
+  background-color: #005f8a;
+}
+
+.confirmation {
+  color: #2e7d32; /* Green color for confirmation */
+  font-weight: bold;
+  margin-top: 16px;
+  text-align: center;
+}
