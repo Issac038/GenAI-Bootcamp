@@ -1,0 +1,100 @@
+* [33ma6b2d2f[m[33m ([m[1;32mfrontend[m[33m)[m updated frontend
+*   [33m9ce4d86[m[33m ([m[1;32mfrontend_backend[m[33m)[m updated frontend
+[32m|[m[33m\[m  
+[32m|[m * [33mb5f5ade[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update Results.jsx
+[32m|[m * [33m479a372[m Update Results.css
+[32m|[m * [33m72e1820[m Update BookAppointments.jsx
+[32m|[m * [33mdb3b39f[m Rename BookAppointmenr.css to BookAppointment.css
+[32m|[m *   [33mb69a7c2[m Merge pull request #16 from Issac038/ResultsAndBooking
+[32m|[m [34m|[m[35m\[m  
+* [34m|[m [35m|[m [33m321173b[m updated server.js
+[35m|[m [34m|[m [35m|[m * [33md3a0d1e[m[33m ([m[1;31morigin/ResultsAndBooking[m[33m)[m Added Results and Book Appointment Components
+[35m|[m [34m|[m [35m|[m[35m/[m  
+[35m|[m [34m|[m * [33m35a555b[m Added components of Results and Book Appointments
+[35m|[m [34m|[m[34m/[m  
+[35m|[m *   [33m81506dc[m Merge pull request #15 from Issac038/serverupdate
+[35m|[m [1;31m|[m[1;32m\[m  
+[35m|[m [1;31m|[m *   [33m56dabc2[m[33m ([m[1;31morigin/serverupdate[m[33m)[m Merge branch 'main' into serverupdate
+[35m|[m [1;31m|[m [1;33m|[m[1;31m\[m  
+[35m|[m [1;31m|[m [1;33m|[m[1;31m/[m  
+[35m|[m [1;31m|[m[1;31m/[m[1;33m|[m   
+[35m|[m * [1;33m|[m   [33mca7c7b3[m Merge pull request #14 from Issac038/backend
+[35m|[m [1;35m|[m[1;36m\[m [1;33m\[m  
+[35m|[m [1;35m|[m * [1;33m\[m   [33m7b119c1[m[33m ([m[1;31morigin/backend[m[33m)[m Merge pull request #13 from Issac038/main
+[35m|[m [1;35m|[m [31m|[m[1;35m\[m [1;33m\[m  
+[35m|[m [1;35m|[m [31m|[m[1;35m/[m [1;33m/[m  
+[35m|[m [1;35m|[m[1;35m/[m[31m|[m [1;33m|[m   
+[35m|[m * [31m|[m [1;33m|[m [33maa43de5[m Delete Backend/node_modules directory
+[35m|[m * [31m|[m [1;33m|[m [33m8b19ec8[m Remove unused dependencies from package.json
+[35m|[m[35m/[m [31m/[m [1;33m/[m  
+* [31m|[m [1;33m|[m   [33mb8c077b[m Merge pull request #12 from Issac038/backend
+[33m|[m[34m\[m [31m\[m [1;33m\[m  
+[33m|[m [34m|[m * [1;33m|[m [33m01a81a4[m Delete Backend/node_modules directory
+[33m|[m [34m|[m[34m/[m [1;33m/[m  
+[33m|[m * [1;33m|[m   [33m9b3cd00[m Merge branch 'main' into backend
+[33m|[m [35m|[m[33m\[m [1;33m\[m  
+[33m|[m [35m|[m[33m/[m [1;33m/[m  
+[33m|[m[33m/[m[35m|[m [1;33m|[m   
+* [35m|[m [1;33m|[m [33m0363f4c[m Delete Backend/node_modules directory
+* [35m|[m [1;33m|[m [33m3df5e8a[m Update rags-pipline.js
+* [35m|[m [1;33m|[m [33md84143c[m Update embeddings.md
+* [35m|[m [1;33m|[m   [33mf0bb912[m Merge pull request #11 from Issac038/embeddings
+[1;31m|[m[1;32m\[m [35m\[m [1;33m\[m  
+* [1;32m\[m [35m\[m [1;33m\[m   [33m591fd5a[m Merge pull request #10 from Issac038/frontend_backend
+[1;33m|[m[1;34m\[m [1;32m\[m [35m\[m [1;33m\[m  
+[1;33m|[m * [1;32m|[m [35m|[m [1;33m|[m [33m9c464a0[m[33m ([m[1;31morigin/frontend_backend[m[33m)[m frontend-backend
+[1;33m|[m * [1;32m|[m [35m|[m [1;33m|[m [33ma599bb5[m basic server done
+[1;33m|[m [1;34m|[m [1;32m|[m [35m|[m * [33mbdd6c48[m removed node_modules from repo
+[1;33m|[m [1;34m|[m [1;32m|[m [35m|[m * [33m6b33782[m serverjs updated again
+[1;33m|[m [1;34m|[m [1;32m|[m [35m|[m[35m/[m  
+[1;33m|[m [1;34m|[m [1;32m|[m * [33m51f7f3e[m integrated aichat and completed backend
+[1;33m|[m [1;34m|[m[1;33m_[m[1;32m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;34m|[m [1;32m|[m   
+[1;33m|[m [1;34m|[m [1;32m|[m * [33m534335a[m[33m ([m[1;31morigin/embeddings[m[33m)[m Completed session 25-27
+[1;33m|[m [1;34m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m [1;34m|[m * [33m0cb59e2[m Completed session 25-27
+[1;33m|[m [1;34m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;34m|[m   
+* [1;34m|[m [33m2a0664e[m Merge pull request #9 from Issac038/frontend_backend
+[1;36m|[m[1;34m\[m[1;34m|[m 
+[1;36m|[m * [33m4327a68[m created a page
+* [31m|[m   [33mbe9ba81[m Merge pull request #8 from Issac038/fewshotprompt
+[32m|[m[33m\[m [31m\[m  
+[32m|[m * [31m|[m [33m2383e7f[m[33m ([m[1;31morigin/fewshotprompt[m[33m)[m Add few-shot prompt for CSV->JSON + component name (sessions 13-15)
+[32m|[m[32m/[m [31m/[m  
+* [31m|[m [33mc7175d1[m Update README.md
+* [31m|[m   [33m09e2a59[m Merge pull request #7 from Issac038/geminiscript
+[34m|[m[35m\[m [31m\[m  
+[34m|[m * [31m|[m [33mefedac6[m[33m ([m[1;31morigin/geminiscript[m[33m)[m completed geminiscript
+[34m|[m[34m/[m [31m/[m  
+* [31m|[m   [33m172e1c5[m Merge pull request #6 from Issac038/aiprompt
+[31m|[m[1;31m\[m [31m\[m  
+[31m|[m [1;31m|[m[31m/[m  
+[31m|[m[31m/[m[1;31m|[m   
+[31m|[m *   [33m9e0f1af[m[33m ([m[1;31morigin/aiprompt[m[33m, [m[1;32maiprompt[m[33m)[m Merge branch 'aiprompt' of https://github.com/Issac038/GenAI-Bootcamp into aiprompt
+[31m|[m [1;32m|[m[1;33m\[m  
+[31m|[m [1;32m|[m * [33m210a293[m Pushed Session 13-15
+[31m|[m * [1;33m|[m [33mfcbab73[m Session 13-15 completed
+[31m|[m [1;33m|[m[1;33m/[m  
+* [1;33m|[m [33mfd1975d[m[33m ([m[1;32mmain[m[33m)[m Pushed Session 13-15
+* [1;33m|[m [33m1084655[m Pushed Session 13-15
+* [1;33m|[m [33m4fd4ba8[m Merge pull request #5 from Issac038/aiprompt
+[1;34m|[m[1;33m\[m[1;33m|[m 
+[1;34m|[m * [33m104e9ea[m completed
+[1;34m|[m[1;34m/[m  
+*   [33m1afb639[m Merge pull request #4 from Issac038/pricing
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33mcaa6bb4[m[33m ([m[1;31morigin/pricing[m[33m)[m Completed session 10-12
+* [31m|[m [33mf9f6239[m Merge pull request #3 from Issac038/prompting
+[32m|[m[31m\[m[31m|[m 
+[32m|[m * [33m4e2fb57[m[33m ([m[1;31morigin/prompting[m[33m, [m[1;32mprompting[m[33m)[m finished session 7-9
+* [33m|[m [33md1830cc[m Merge pull request #2 from Issac038/aichat
+[34m|[m[33m\[m[33m|[m 
+[34m|[m * [33mb546c6b[m[33m ([m[1;31morigin/aichat[m[33m, [m[1;32maichat[m[33m)[m Completed session 4-6
+[34m|[m[34m/[m  
+*   [33m511efe5[m Merge pull request #1 from Issac038/hdl
+[36m|[m[1;31m\[m  
+[36m|[m * [33m2bde322[m[33m ([m[1;31morigin/hdl[m[33m, [m[1;32mhdl[m[33m)[m Finished session 1-3 and added hdl file
+* [1;31m|[m [33m47dbd28[m Update README.md
+[1;31m|[m[1;31m/[m  
+* [33m70cb668[m yes
