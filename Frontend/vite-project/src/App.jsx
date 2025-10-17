@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/AuthContext";
 import SymptomCheckerChat from "./components/SymptomCheckerChat";
-import BookAppointment from "./components/BookAppointments";
+import BookAppointment from "./components/BookAppointment";
 import Results from "./components/Results";
 import AuthPage from "./components/AuthPage";
 import ReportPage from "./components/ReportPage";

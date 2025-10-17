@@ -55,7 +55,9 @@ export default function SymptomCheckerChat() {
     setIsSending(true);
 
     try {
-      const res = await fetch('/api/analyze', {
+      const API_URL = "http://localhost:8080";
+
+      const res = await fetch( `${API_URL}/api/analyze` , {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, symptomsText: trimmed })

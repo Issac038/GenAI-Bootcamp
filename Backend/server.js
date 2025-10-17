@@ -7,65 +7,27 @@ import bodyParser from "body-parser";
 import fetch from "node-fetch";
 import User from "./models/User.js";
 import Session from "./models/Session.js";
+import cors from "cors";
+import authRoutes from "./routes/auth.js";
+
 
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
+app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 const USE_MOCK_AICHAT = false;
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
-
-//login and signup routes
-// 🧠 Signup Route
-app.post("/api/signup", async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ ok: false, error: "User already exists" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
-    await newUser.save();
-
-    res.status(201).json({ ok: true, message: "User registered successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ ok: false, error: "Server error" });
-  }
-});
-
-// 🔑 Login Route
-app.post("/api/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user)
-      return res.status(404).json({ ok: false, error: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(401).json({ ok: false, error: "Invalid password" });
-
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    res.json({ ok: true, token, userId: user._id });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ ok: false, error: "Server error" });
-  }
-});
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 
 // Health check route
@@ -128,9 +90,11 @@ app.post("/api/analyze", async (req, res) => {
     res.json({ ok: true, ai_response, session_id: session._id });
 
   } catch (err) {
-    console.error("❌ Error in /api/analyze:", err);
+    console.error("Error in /api/analyze:", err);
     res.status(500).json({ ok: false, error: err.message });
   }
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.use("/api", authRoutes);
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
