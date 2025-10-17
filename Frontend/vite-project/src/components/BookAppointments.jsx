@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import "./BookAppointment.css";
+import './BookAppointment.css';
+
 
 export default function BookAppointment({ onBack }) {
   const [hospitals, setHospitals] = useState([]);
@@ -75,7 +76,7 @@ export default function BookAppointment({ onBack }) {
       {confirmation && <p className="confirmation">{confirmation}</p>}
 
       <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <button onClick={onBack}>Back to Results</button>
+        <button onClick={onBack}>&larr; Back to Results</button>
       </div>
     </div>
   );

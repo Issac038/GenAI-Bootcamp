@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./Results.css";
+import './Results.css';
 import BookAppointment from "./BookAppointments";
 
 export default function Results() {
