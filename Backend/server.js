@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
 import User from "./models/User.js";
@@ -17,6 +19,54 @@ const USE_MOCK_AICHAT = false;
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
+
+//login and signup routes
+// 🧠 Signup Route
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ ok: false, error: "User already exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ name, email, password: hashedPassword });
+    await newUser.save();
+
+    res.status(201).json({ ok: true, message: "User registered successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ ok: false, error: "Server error" });
+  }
+});
+
+// 🔑 Login Route
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(404).json({ ok: false, error: "User not found" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(401).json({ ok: false, error: "Invalid password" });
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ ok: true, token, userId: user._id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ ok: false, error: "Server error" });
+  }
+});
+
 
 // Health check route
 app.get("/", (req, res) => {
