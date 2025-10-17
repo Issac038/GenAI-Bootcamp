@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const API_URL = "http://localhost:8080"; // your backend URL
 
@@ -8,6 +9,7 @@ export default function AuthPage() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,6 +40,16 @@ export default function AuthPage() {
 
       // Redirect to symptom checker page
       navigate("/symptom-checker");
+
+      // Success — store token/user ID and update auth context
+      localStorage.setItem("userId", data.userId);
+      login(data); // Update auth context
+      
+      alert(isSignUp ? "Account created successfully!" : "Login successful!");
+      
+      // Redirect to homepage
+      navigate("/home");
+
     } catch (err) {
       alert(err.message);
       console.error("Auth error:", err);
