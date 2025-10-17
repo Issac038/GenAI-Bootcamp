@@ -1,8 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import appointmentRoutes from "./routes/appointment.js";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
 import User from "./models/User.js";
@@ -96,5 +95,6 @@ app.post("/api/analyze", async (req, res) => {
 });
 
 app.use("/api", authRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
