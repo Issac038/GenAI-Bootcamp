@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import './Results.css';
-import BookAppointment from "./BookAppointments";
+import BookAppointment from "./BookAppointment";
 
 export default function Results() {
   const [aiResponse, setAiResponse] = useState("");

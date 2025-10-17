@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = "http://localhost:8080"; // your backend URL
+
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -18,7 +20,7 @@ export default function AuthPage() {
     const endpoint = isSignUp ? "/api/signup" : "/api/login";
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${API_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -26,13 +28,15 @@ export default function AuthPage() {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Authentication failed.");
+      if (!res.ok) throw new Error(data.message || "Authentication failed.");
 
-      // Success — store token/user ID
-      localStorage.setItem("userId", data.userId);
+      // Success — store token and user info
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.user._id);
+
       alert(isSignUp ? "Account created successfully!" : "Login successful!");
 
-      // Redirect to symptom checker
+      // Redirect to symptom checker page
       navigate("/symptom-checker");
     } catch (err) {
       alert(err.message);
@@ -97,7 +101,10 @@ export default function AuthPage() {
 
           <p className="auth-toggle">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-            <span onClick={() => setIsSignUp(!isSignUp)}>
+            <span
+              style={{ cursor: "pointer", color: "blue" }}
+              onClick={() => setIsSignUp(!isSignUp)}
+            >
               {isSignUp ? "Login" : "Sign Up"}
             </span>
           </p>
