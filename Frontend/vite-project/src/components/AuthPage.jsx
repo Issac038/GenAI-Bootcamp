@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,12 +30,14 @@ export default function AuthPage() {
 
       if (!res.ok) throw new Error(data.error || "Authentication failed.");
 
-      // Success — store token/user ID
+      // Success — store token/user ID and update auth context
       localStorage.setItem("userId", data.userId);
+      login(data); // Update auth context
+      
       alert(isSignUp ? "Account created successfully!" : "Login successful!");
-
-      // Redirect to symptom checker
-      navigate("/symptom-checker");
+      
+      // Redirect to homepage
+      navigate("/home");
     } catch (err) {
       alert(err.message);
       console.error("Auth error:", err);
