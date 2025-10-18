@@ -1,50 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import './ReportPage.css';
-
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "./ReportPage.css";
 
 const ReportPage = () => {
   const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Mock data setup
+  // ✅ Fetch the latest session report from backend
   useEffect(() => {
-    const mockReport = {
-      name: 'Pranav',
-      age: 28,
-      symptoms: ['Fever', 'Cough', 'Fatigue'],
-      conditions: ['Viral Infection', 'Seasonal Flu'],
-      hospitals: [
-        { name: 'CityCare Hospital', location: 'Ernakulam' },
-        { name: 'Sunrise Clinic', location: 'Kochi' },
-      ],
-      appointment: {
-        hospital: 'CityCare Hospital',
-        date: '2025-10-18',
-        time: '11:00 AM',
-      },
+    const fetchReport = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("Please log in first");
+          return;
+        }
+
+        const response = await fetch("http://localhost:5000/api/session/latest", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setReportData(data);
+        } else {
+          console.error("Error fetching report:", data.message);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    setReportData(mockReport);
-    setLoading(false);
+    fetchReport();
   }, []);
 
-  // Send report to backend
+  // ✅ Send report to backend for emailing
   const handleSendReport = async () => {
     if (!reportData) return;
 
     try {
-      const response = await fetch('/api/send-report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:5000/api/send-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reportData),
       });
 
       const result = await response.json();
-      alert(result.message || 'Report sent successfully!');
+      alert(result.message || "Report sent successfully!");
     } catch (error) {
-      console.error('Send report error:', error);
-      alert('Failed to send report.');
+      console.error("Send report error:", error);
+      alert("Failed to send report.");
     }
   };
 
@@ -57,6 +65,20 @@ const ReportPage = () => {
     );
   }
 
+  if (!reportData) {
+    return (
+      <div className="report-container">
+        <h1>🧾 Consultation Summary</h1>
+        <p>No report found.</p>
+        <Link to="/" className="report-link">
+          ← Back to Home
+        </Link>
+      </div>
+    );
+  }
+
+  const { user, symptoms, ai_response, metadata } = reportData;
+
   return (
     <div className="report-container">
       <h1>🧾 Consultation Summary</h1>
@@ -64,49 +86,44 @@ const ReportPage = () => {
       {/* Patient Info */}
       <section className="report-section">
         <h2>👤 Patient Info</h2>
-        <p><strong>Name:</strong> {reportData.name}</p>
-        <p><strong>Age:</strong> {reportData.age}</p>
+        <p><strong>Name:</strong> {user?.name}</p>
+        <p><strong>Email:</strong> {user?.email}</p>
       </section>
 
       {/* Symptoms */}
       <section className="report-section">
         <h2>🩺 Symptoms</h2>
-        <ul>
-          {reportData.symptoms.map((symptom, index) => (
-            <li key={index}>{symptom}</li>
-          ))}
-        </ul>
+        <p>{symptoms}</p>
       </section>
 
-      {/* Probable Conditions */}
+      {/* AI Response */}
       <section className="report-section">
-        <h2>🔍 Probable Conditions</h2>
-        <ul>
-          {reportData.conditions.map((condition, index) => (
-            <li key={index}>{condition}</li>
-          ))}
-        </ul>
+        <h2>🔍 AI Diagnosis</h2>
+        <p>{ai_response}</p>
       </section>
 
-      {/* Recommended Hospitals */}
-      <section className="report-section">
-        <h2>🏥 Recommended Hospitals</h2>
-        <ul>
-          {reportData.hospitals.map((hospital, index) => (
-            <li key={index}>
-              {hospital.name} – {hospital.location}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* Metadata — optional fields like hospitals/appointments */}
+      {metadata?.hospitals && metadata.hospitals.length > 0 && (
+        <section className="report-section">
+          <h2>🏥 Recommended Hospitals</h2>
+          <ul>
+            {metadata.hospitals.map((hospital, i) => (
+              <li key={i}>
+                {hospital.name} – {hospital.location}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      {/* Appointment Details */}
-      <section className="report-section">
-        <h2>📅 Appointment Details</h2>
-        <p><strong>Hospital:</strong> {reportData.appointment.hospital}</p>
-        <p><strong>Date:</strong> {reportData.appointment.date}</p>
-        <p><strong>Time:</strong> {reportData.appointment.time}</p>
-      </section>
+      {metadata?.appointment && (
+        <section className="report-section">
+          <h2>📅 Appointment Details</h2>
+          <p><strong>Hospital:</strong> {metadata.appointment.hospital}</p>
+          <p><strong>Date:</strong> {metadata.appointment.date}</p>
+          <p><strong>Time:</strong> {metadata.appointment.time}</p>
+        </section>
+      )}
 
       {/* Actions */}
       <section className="report-section report-actions">

@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useNavigate } from 'react-router-dom'; // ✅ import
 import uparrow from '../assets/uparrow.jpg';
 
 const ChatMessage = ({ message }) => {
   const isUser = message.role === 'user';
 
   return (
-    <div
-      className={`chat-message ${isUser ? 'user-message' : 'assistant-message'}`}
-    >
+    <div className={`chat-message ${isUser ? 'user-message' : 'assistant-message'}`}>
       <div className={`chat-bubble ${isUser ? 'user' : 'assistant'}`}>
         {!isUser && message.severity && (
           <p className="severity-badge">Severity: {message.severity}</p>
@@ -34,9 +33,9 @@ export default function SymptomCheckerChat() {
   ]);
   const [isSending, setIsSending] = useState(false);
   const bottomRef = useRef(null);
+  const navigate = useNavigate(); // ✅ add this
   const userId = "671021c9b45e1c90495d1c6f";
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -57,7 +56,7 @@ export default function SymptomCheckerChat() {
     try {
       const API_URL = "http://localhost:8080";
 
-      const res = await fetch( `${API_URL}/api/analyze` , {
+      const res = await fetch(`${API_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, symptomsText: trimmed })
@@ -71,11 +70,22 @@ export default function SymptomCheckerChat() {
       }
 
       const payload = await res.json();
+
       if (payload.ai_response) {
+        // Push AI message to chat
         pushMessage({
           role: 'assistant',
           text: payload.ai_response,
           severity: payload.severity || 'Mild'
+        });
+
+        // ✅ Navigate to Results page with state
+        navigate("/results", {
+          state: {
+            symptoms: trimmed,
+            ai_response: payload.ai_response,
+            severity: payload.severity || 'Mild'
+          }
         });
       } else {
         pushMessage({ role: 'assistant', text: payload.error || 'No valid response from AI.' });
