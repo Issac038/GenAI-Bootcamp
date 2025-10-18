@@ -28,7 +28,7 @@ This is the appointment booking page built using React. It allows users to choos
 
 This is the Results page built using React. It displays the AI’s analysis based on the symptoms entered by the user. The page shows the detected severity level, the AI’s response, and gives the user options to either book an appointment or generate a report. It’s designed to make the transition from diagnosis to action simple and intuitive.
 
-![Results Page Screenshot](assets/Screenshot_`2025-10-18_at_09.27.41.png)
+![Results Page Screenshot](assets/Screenshot_2025-10-18_at_09.27.41.png)
 
 
 ------------------------------------------------------------------
