@@ -16,19 +16,19 @@ This is our authentication page built using React. It allows users to sign up or
 
 The Symptom Checker allows users to enter their symptoms and receive instant AI-powered analysis, helping them understand possible conditions and guiding them toward verified medical information.
 
-![SymptomChecker Page Screenshot](assets/Screenshot 2025-10-18_at_09.24.54.png)
+![SymptomChecker Page Screenshot](assets/Screenshot_2025-10-18_at_09.24.54.png)
 
 **APPOINTMENT BOOKING PAGE**
 
 This is the appointment booking page built using React. It allows users to choose a hospital, select a time slot, and confirm their booking. The page connects with the backend API using a secure token stored in local storage. Once the booking is successful, a confirmation message is shown, and users can easily navigate back to the home page.
 
-![AppointmentBooking Page Screenshot](assets/Screenshot 2025-10-18_at_09.26.12.png)
+![AppointmentBooking Page Screenshot](assets/Screenshot_2025-10-18_at_09.26.12.png)
 
 **RESULTS PAGE**
 
 This is the Results page built using React. It displays the AI’s analysis based on the symptoms entered by the user. The page shows the detected severity level, the AI’s response, and gives the user options to either book an appointment or generate a report. It’s designed to make the transition from diagnosis to action simple and intuitive.
 
-![Results Page Screenshot](assets/Screenshot 2025-10-18_at_09.27.41.png)
+![Results Page Screenshot](assets/Screenshot_`2025-10-18_at_09.27.41.png)
 
 
 ------------------------------------------------------------------
