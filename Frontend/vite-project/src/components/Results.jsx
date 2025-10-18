@@ -1,34 +1,23 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import './Results.css';
 import BookAppointment from "./BookAppointment";
 
 export default function Results() {
+  const location = useLocation();
+  const [symptoms, setSymptoms] = useState("");
   const [aiResponse, setAiResponse] = useState("");
-  const [verifiedInfo, setVerifiedInfo] = useState([]);
-  const [showBooking, setShowBooking] = useState(false); // toggle for BookAppointment
+  const [severity, setSeverity] = useState("");
+  const [showBooking, setShowBooking] = useState(false);
 
   useEffect(() => {
-    setAiResponse(
-      "Patient may be experiencing mild flu-like symptoms. Recommend rest, hydration, and monitoring temperature."
-    );
+    if (location.state) {
+      setSymptoms(location.state.symptoms || "");
+      setAiResponse(location.state.ai_response || "");
+      setSeverity(location.state.severity || "Mild");
+    }
+  }, [location.state]);
 
-    const mockData = [
-      {
-        condition: "Common Cold",
-        description: "A viral infection of your nose and throat.",
-        advice: "Rest, stay hydrated, and monitor symptoms."
-      },
-      {
-        condition: "Seasonal Flu",
-        description: "Influenza virus infection.",
-        advice: "Get plenty of rest, drink fluids, and see a doctor if severe."
-      }
-    ];
-
-    setVerifiedInfo(mockData);
-  }, []);
-
-  // If showBooking is true, render BookAppointment
   if (showBooking) {
     return <BookAppointment onBack={() => setShowBooking(false)} />;
   }
@@ -37,26 +26,17 @@ export default function Results() {
     <div className="results-container">
       <h1>AI Symptom Analysis</h1>
 
+      {/* Symptoms */}
+      <div className="symptom-section">
+        <h2>Your Symptoms</h2>
+        <p>{symptoms || "No symptoms provided."}</p>
+        {severity && <p><strong>Severity:</strong> {severity}</p>}
+      </div>
+
       {/* AI Response */}
       <div className="ai-section">
         <h2>AI Response</h2>
         <pre className="ai-text">{aiResponse || "No AI response available."}</pre>
-      </div>
-
-      {/* Verified Info */}
-      <div className="verified-section">
-        <h2>Verified Medical Information</h2>
-        {verifiedInfo.length > 0 ? (
-          verifiedInfo.map((item, idx) => (
-            <div key={idx} className="info-card">
-              <h3>{item.condition}</h3>
-              <p><strong>Description:</strong> {item.description}</p>
-              <p><strong>Advice:</strong> {item.advice}</p>
-            </div>
-          ))
-        ) : (
-          <p>No verified info available.</p>
-        )}
       </div>
 
       {/* Buttons */}
