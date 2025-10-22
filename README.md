@@ -67,4 +67,6 @@ npm – For managing project dependencies.
 
 Git / GitHub – Version control and remote repository hosting for collaboration.
 
-`
+------------------------------------------------------------------
+
+Deployed frontend - https://gen-ai-bootcamp-two.vercel.app/
